@@ -1,12 +1,7 @@
 from flask import Flask, render_template, request
 
-# import sys
-# sys.path.append('allFunctions')
-# sys.path.append('allClasses')
-
-from allFunctions.BMR_func import BMR_calc
-from allClasses.ActivityClass import ActivityOptions
-from allClasses.GenderClass import GenderOptions
+from allFunctions import *
+from allClasses import *
 
 app = Flask(__name__)
 
@@ -17,9 +12,9 @@ def get_info():
         age = int(request.form['age'])
         height = float(request.form['height'])
         weight = float(request.form['weight'])
-        activity = ActivityOptions(request.form['activity'])
-        gender = GenderOptions(request.form['gender'])
-        result = BMR_calc(age, height, weight, float(activity.value), gender.value)
+        activity = ActivityClass.ActivityOptions(request.form['activity'])
+        gender = GenderClass.GenderOptions(request.form['gender'])
+        result = BMR_func.BMR_calc(age, height, weight, float(activity.value), gender.value)
 
     return render_template('index.html', result=result)
 
