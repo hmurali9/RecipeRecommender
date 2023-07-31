@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+
+{% for index, entry in filtered_data.iterrows() %}
+  <div class="card" style="width: 15rem; margin: 50px; display:inline-block">
+  <img src = "{{ entry['Image'] }}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{ entry['Title'] }}</h5>
+    <ul class="card-text">
+        <li>Serving Size: {{ entry['Serving_size'] }}</li>
+        <li>Prep Time: {{ entry['Prep_time'] }} mins</li>
+        <li>Average Rating: {{ entry['Average_rating'] }}</li>
+        <li>Reviews: {{ entry['No_of_reviews'] }}</li>
+        <li>Calories: {{ entry['Calories'] }}</li>
+    </ul>
+    <a href="{{ entry['URL'] }}" class="btn btn-primary">Link to Recipe</a>
+  </div>
+  </div>
+{% endfor %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<br/>
+<br/>
+
+<a href="{{ url_for('get_info') }}" class="btn btn-primary"
+   style="margin: 10px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: .75rem;">
+   Go Back
+</a>
+
+<button class="btn btn-primary" onClick="window.location.reload();"
+    style="margin: 10px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: .75rem;">
+    Refresh Choices
+</button>
+
+
+</body>
+</html>
