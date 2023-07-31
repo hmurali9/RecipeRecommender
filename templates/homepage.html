@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipe Recommender</title>
+</head>
+<body>
+    <h1>Recipe Recommender</h1>
+    <form method="post" action="{{ url_for('results') }}">
+        <label for="Age">Age (in years):</label>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="Height">Height (in cm):</label>
+        <input id="height" name="height" required><br><br>
+
+        <label for="Weight">Weight (in kg):</label>
+        <input id="weight" name="weight" required><br><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Rather not say">Rather not say</option>
+        </select><br><br>
+
+        <label for="Activity">Activity:</label>
+        <select id="activity" name="activity" required>
+            <option value="1.2">Sedentary (little or no exercise)</option>
+            <option value="1.375">Lightly active (light exercise/sports 1-3 days/week)</option>
+            <option value="1.55">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+            <option value="1.725">Very active (hard exercise/sports 6-7 days a week)</option>
+            <option value="1.9">Extra active (very hard exercise/sports & a physical job)</option>
+        </select><br><br>
+
+        <label for="MealType">Meal Type:</label>
+        <select id="mealtype" name="mealtype" required>
+            <option value="Individual Recipe">Individual Recipe</option>
+            <option value="Meal Plan">Meal Plan</option>
+        </select><br><br>
+
+        <label for="PrepTime">Recipe Preparation Time Preferred:</label>
+        <select id="preptime" name="preptime" required>
+            <option value="5">Quick and Easy recipes preferred</option>
+            <option value="3">Moderate prep time preferred</option>
+            <option value="1">Prep time not too important</option>
+        </select><br><br>
+
+        <label for="Vegan">Vegan Meal:</label>
+        <select id="vegan" name="vegan" required>
+            <option value="Don't mind either">Don't mind either</option>
+            <option value="Vegan">Vegan</option>
+            <option value="Strictly not vegan">Strictly not vegan</option>
+        </select><br><br>
+
+        <label for="Allergies">Allergies (separate multiple values using ,):</label>
+        <input id="allergies" name="allergies" ><br><br>
+
+        <label for="SearchTerm">Search <br/>(separate multi values using ,)<br/> (ignored for Meal Plan)  :</label>
+        <input id="searchterm" name="searchterm"><br><br>
+
+        <label for="Servings">Number of Meals per day:</label>
+        <input type="number" id="servings" name="servings" required><br><br>
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+
+</body>
+</html>

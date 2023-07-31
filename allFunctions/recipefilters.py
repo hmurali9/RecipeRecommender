@@ -3,13 +3,14 @@ import numpy as np
 
 
 class Recommender:
-
-    def __int__(self, df_recipes, df_ing, df_rec2ing):
+    def __init__(self, df_recipes, df_ing, df_rec2ing):
         self.recipes = df_recipes
         self.ing = df_ing
         self.rec2ing = df_rec2ing
 
     def allergy_filter(self, allergies):
+
+        allergies = allergies.split(',')
 
         if len(allergies) >= 1 and allergies[0] != '':
 
@@ -47,6 +48,8 @@ class Recommender:
 
     def search_filter(self, search_term, df):
 
+        search_term = search_term.split(',')
+
         if len(search_term) >= 1 and search_term[0] != '':
 
             srch = [i + '*' for i in search_term]
@@ -66,22 +69,28 @@ class Recommender:
 
     # Filters based on calculated nutritional facts adding a +/- 10% buffer
 
-    def cal_filter(self, cal, protein, fat, df):
+    def cal_filter(self, cal, df):
+
+        # These numbers change with different types of diet
+
+        protein = 0.25 / 4 * cal
+        fat = 0.25 / 9 * cal
+
         return df[(df.Calories >= 0.9 * cal) & (df.Calories <= 1.1 * cal) & (df.Protein >= 0.9 * protein) & (
-                    df.Protein >= 0.9 * protein)
+                df.Protein >= 0.9 * protein)
                   & (df.Fats >= 0.9 * fat) & (df.Fats >= 0.9 * fat)]
 
     # Incorporates the above functions to return a list of recipe IDs for individual recipe search
 
-    def ind_recipes(self, x, cals, protein, fat, search_term, vegan, allergies):
+    def ind_recipes(self, preptime, cals, search_term, vegan, allergies):
 
-        df = self.cal_filter(cals, protein, fat,
+        df = self.cal_filter(cals,
                              self.search_filter(search_term,
                                                 self.vegan_filter(vegan,
                                                                   self.allergy_filter(allergies))))
 
         df = df[df.No_of_reviews >= 10]
-        df['score'] = (df.Average_rating * np.log10(df.No_of_reviews)) - (x * df.Prep_time / 60)
+        df['score'] = (df.Average_rating * np.log10(df.No_of_reviews)) - (preptime * df.Prep_time / 60)
         df.sort_values('score', ascending=False, inplace=True)
 
         ind_list = list(df['RecipeID'].iloc[0:14])
@@ -93,14 +102,14 @@ class Recommender:
     # Each child list corresponds to the meals (so 4 child lists for 4 meals/day)
     # Each element in the child list corresponds to the recipe options user can select from (3/5 options per child list - defined by k)
 
-    def meal_plan(self, x, cals, protein, fat, vegan, allergies, meals):
+    def meal_plan(self, preptime, cals, vegan, allergies, meals):
 
-        df = self.cal_filter(cals, protein, fat,
+        df = self.cal_filter(cals,
                              self.vegan_filter(vegan,
                                                self.allergy_filter(allergies)))
 
         df = df[df.No_of_reviews >= 10]
-        df['score'] = (df.Average_rating * np.log10(df.No_of_reviews)) - (x * df.Prep_time / 60)
+        df['score'] = (df.Average_rating * np.log10(df.No_of_reviews)) - (preptime * df.Prep_time / 60)
         df.sort_values('score', ascending=False, inplace=True)
 
         ind_list = list(df['RecipeID'].iloc[0:5 * meals])
