@@ -5,15 +5,18 @@
     <script type="text/javascript">
     function CheckMeal(val){
      var element=document.getElementById('searchterm');
-     if(val=='Individual Recipe')
-       element.style.display='inline-block';
-     else
-       element.style.display='none';
+     if(val=='Individual Recipe'){
+       $('#seatchterm').prop('disabled', false);
+       } else {
+       $('#seatchterm').prop('disabled', true);
+       }
     }
 
 
     </script>
 </head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <body>
 <h1>Recipe Recommender</h1>
@@ -50,7 +53,7 @@
     </select><br><br>
 
     <label for="SearchTerm">Search (separate multi values using ,):</label>
-    <input type="text" id="searchterm" name="searchterm" style='display:inline-block;'><br><br>
+    <input type="text" class="form-control" id="searchterm" name="searchterm" disabled><br><br>
 
     <label for="PrepTime">Recipe Preparation Time Preferred:</label>
     <select id="preptime" name="preptime" required>
