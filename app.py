@@ -25,13 +25,13 @@ def results():
     mealtype = MealTypeClass.MealTypeOptions(request.form['mealtype'])
     preptime = PrepTimeClass.PrepTimeOptions(request.form['preptime'])
     allergies = request.form['allergies']
-    searchterm = request.form['searchterm']
     vegan = VeganClass.VeganOptions(request.form['vegan'])
     meals = int(request.form['servings'])
 
     cals = BMR_func.BMR_calc(age, height, weight, float(activity.value), gender.value)
 
     if mealtype.value == "Individual Recipe":
+        searchterm = request.form['searchterm']
         recipe_ids = recipe.ind_recipes(int(preptime.value), cals / meals, searchterm, vegan.value, allergies)
     else:
         recipe_ids = recipe.meal_plan(int(preptime.value), cals, vegan.value, allergies, meals)
@@ -49,13 +49,13 @@ def ind_recipe():
     mealtype = MealTypeClass.MealTypeOptions(request.form['mealtype'])
     preptime = PrepTimeClass.PrepTimeOptions(request.form['preptime'])
     allergies = request.form['allergies']
-    searchterm = request.form['searchterm']
     vegan = VeganClass.VeganOptions(request.form['vegan'])
     meals = int(request.form['servings'])
 
     cals = BMR_func.BMR_calc(age, height, weight, float(activity.value), gender.value)
 
     if mealtype.value == "Individual Recipe":
+        searchterm = request.form['searchterm']
         recipe_ids = recipe.ind_recipes(int(preptime.value), cals / meals, searchterm, vegan.value, allergies)
     else:
         recipe_ids = recipe.meal_plan(int(preptime.value), cals, vegan.value, allergies, meals)
